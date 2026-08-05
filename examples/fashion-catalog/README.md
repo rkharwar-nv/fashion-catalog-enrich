@@ -74,6 +74,13 @@ the summary counts the rest as `content_only_changes`.
 - **The outlier flags** in `reconciliation.csv` — products published despite a
   disagreeing merchant signal, with the disagreeing signal named.
 
+## What this example predates
+
+`target_audience` was added to the taxonomy after this run. Enrichment produces
+attribute values, and a rebuild replays enrichment rather than redoing it, so no
+record here carries one. Populating it needs a fresh enrichment run against the
+source catalog.
+
 ## Reproducing
 
 Deterministic: the same inputs always give a byte-identical catalog, and no model

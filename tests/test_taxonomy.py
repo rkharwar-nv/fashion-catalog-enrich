@@ -180,3 +180,31 @@ def test_color_mismatch_reports_both_values():
 def test_espadrille_flat_is_not_a_sandal():
     """A closed-upper espadrille is a flat; the name must not vote for sandals."""
     assert name_product_signal("Elegant Embroidered Espadrilles") is None
+
+
+# --------------------------------------------------------------------------- #
+# target_audience
+# --------------------------------------------------------------------------- #
+def test_target_audience_applies_to_every_product_type():
+    from fashion_catalog.taxonomy import PRODUCT_ATTRIBUTES
+    missing = [t for t, attrs in PRODUCT_ATTRIBUTES.items() if "target_audience" not in attrs]
+    assert missing == []
+
+
+def test_target_audience_values():
+    from fashion_catalog.taxonomy import ATTRIBUTE_VALUES
+    assert ATTRIBUTE_VALUES["target_audience"] == {"women", "men", "unisex", "kids"}
+
+
+def test_target_audience_can_be_sourced_from_a_merchant_column():
+    """A merchant 'gender' or 'department' column should satisfy the evidence rule."""
+    from fashion_catalog.taxonomy import STRUCTURED_SOURCE_FIELDS
+    assert {"gender", "department", "audience"} <= STRUCTURED_SOURCE_FIELDS["target_audience"]
+
+
+def test_prompt_forbids_reading_audience_off_the_model():
+    """The rule that keeps this from becoming a guess about a person."""
+    from pathlib import Path
+    source = (Path(__file__).resolve().parents[1]
+              / "src" / "fashion_catalog" / "models.py").read_text()
+    assert "Never infer it from the appearance, body, or presentation of a person" in source

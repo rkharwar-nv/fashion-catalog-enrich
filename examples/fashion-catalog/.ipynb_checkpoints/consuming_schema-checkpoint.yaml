@@ -29,10 +29,6 @@ fields:
   pattern:
     type: enum
     uses: [filter, semantic, detail]
-  # Who the product is merchandised for: women, men, unisex, kids.
-  target_audience:
-    type: enum
-    uses: [filter, semantic, detail]
 
   closure:
     type: enum

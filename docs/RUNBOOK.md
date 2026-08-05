@@ -175,7 +175,7 @@ appear. An absent attribute means "not established", never "false".
 
 | | Attributes |
 |---|---|
-| all products | `primary_color`, `pattern`, `composition`, `care` |
+| all products | `primary_color`, `pattern`, `composition`, `care`, `target_audience` |
 | apparel | `neckline`, `sleeve_length`, `garment_length`, `silhouette`, `closure` |
 | footwear | `toe_shape`, `heel_type`, `fastening`, `shaft_height` |
 | bags | `carry_method`, `bag_closure`, `structure` |

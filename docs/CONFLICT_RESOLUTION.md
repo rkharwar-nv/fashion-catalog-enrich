@@ -87,6 +87,14 @@ eliminates a product.
 - `composition` and `care` are **free-text merchant claims** and cannot be
   sourced from the image alone. "60% cotton" is not visible. An attempt to
   derive them visually is rejected.
+- `target_audience` — `women`, `men`, `unisex`, `kids` — is who the product is
+  **merchandised for**, not who is modelling it. The merchant's value wins.
+  Failing that it may be inferred only from how the product is cut or
+  constructed, and only where that is decisive. It is never inferred from the
+  appearance of a person in the image: a unisex product photographed on a woman
+  is still unisex, and a person's presentation is not evidence about a product.
+  Where construction does not settle it, the value is `unisex` for something
+  plainly worn by anyone and otherwise absent.
 
 ## Poor product information
 
