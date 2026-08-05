@@ -289,7 +289,9 @@ def rebuild(
             # Set from the classification, not from the image or the person in
             # it. Only types whose construction settles the department appear in
             # the table; the rest stay unset.
-            audience = derived_audience(published["category"], published["subcategory"])
+            audience = derived_audience(
+                published["category"], published["subcategory"], published,
+            )
             if audience:
                 published["target_audience"] = audience
                 entry["target_audience_source"] = "derived_from_classification"

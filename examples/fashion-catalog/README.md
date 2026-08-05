@@ -74,20 +74,26 @@ the summary counts the rest as `content_only_changes`.
 - **The outlier flags** in `reconciliation.csv` — products published despite a
   disagreeing merchant signal, with the disagreeing signal named.
 
-## target_audience here is derived, not enriched
+## target_audience here is assigned, not enriched
 
 `target_audience` was added after this run, and a rebuild replays enrichment
-rather than redoing it, so no value here came from a model. These were set from
-the classification with `--derive-audience`: **83 of 215**, all `womens`.
+rather than redoing it, so no value here came from a model. All 215 were set by
+`--derive-audience` from the rules in `AUDIENCE_BY_PRODUCT_TYPE`.
 
-Only garment terms that are themselves gendered qualify — dress, skirt, blouse,
-camisole. The other 132 are unset, and that is the honest answer rather than a
-gap. A bag, a pair of sunglasses or a bracelet has no cut that decides a
-department, and merchants shelve all three by department routinely, so the
-classification cannot assert one. Knitwear, jumpsuits and footwear are the same.
+| | |
+|---|---:|
+| `womens` | 177 |
+| `all_genders` | 38 — bags other than clutches, and aviator sunglasses |
 
-Filling those needs the merchant's own value, a fresh enrichment run that can
-read the product, or a reviewed decision per product.
+Only part of that is inference. Dress, skirt, blouse and camisole are gendered
+garment terms, so those follow from the classification. The rest — heels as
+womens, totes as all_genders, aviators as all_genders while cat-eye is womens —
+is **merchandising policy for this catalog**, reviewed and recorded rather than
+derived. A different retailer would set them differently, which is why they live
+in an editable table rather than in the enrichment prompt.
+
+The aviator rule is attribute-level: it beats the eyewear default, so 9 of the
+29 sunglasses are `all_genders` and the other 20 are `womens`.
 
 ## Reproducing
 

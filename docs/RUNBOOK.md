@@ -125,9 +125,11 @@ fashion-catalog-rebuild \
 - `--baseline` is optional and marks each row `ADDED`, `UPDATED`, `UNCHANGED` or
   `DROPPED` against a previous catalog.
 - `--derive-audience` sets `target_audience` for catalogs enriched before the
-  field existed, but only where the garment term is itself gendered — dress,
-  skirt, blouse, camisole. It never overwrites an enriched value, and everything
-  else stays unset because a category does not decide a department.
+  field existed, from `AUDIENCE_BY_PRODUCT_TYPE` and `AUDIENCE_BY_ATTRIBUTE` in
+  `taxonomy.py`. It never overwrites an enriched value. Those tables are
+  merchandising policy — a gendered garment term follows from the product, but
+  whether a tote is `womens` or `all_genders` is a decision your catalog makes,
+  so edit them to match how you shelve.
   Rows it touches are marked `target_audience_source: derived_from_classification`
   in the ledger, so a derived value is never mistaken for an observed one.
 

@@ -107,24 +107,24 @@ def test_derived_audience_matches_what_the_rule_would_produce(catalog):
     disagreements = [
         (record["source_row"], record.get("target_audience"), expected)
         for record in catalog
-        for expected in [derived_audience(record["category"], record["subcategory"])]
+        for expected in [derived_audience(record["category"], record["subcategory"], record)]
         if record.get("target_audience") != expected
     ]
     assert disagreements == []
 
 
-def test_only_definitional_garment_terms_carry_a_derived_department(catalog):
-    """Absence is the honest answer wherever the classification is silent.
+def test_every_product_carries_a_department(catalog):
+    """A filterable field with gaps hides products from the filter."""
+    missing = [r["source_row"] for r in catalog if not r.get("target_audience")]
+    assert missing == []
 
-    A bag, a pair of sunglasses or a bracelet has no cut that decides a
-    department, and merchants shelve all three by department routinely, so the
-    classification alone must not assert one.
-    """
-    assigned = {
-        (record["category"], record["subcategory"])
-        for record in catalog if record.get("target_audience")
-    }
-    assert assigned == {
-        ("apparel", "dresses"), ("apparel", "skirts"),
-        ("apparel", "blouses"), ("apparel", "camisoles"),
-    }
+
+def test_aviator_frames_override_the_eyewear_default(catalog):
+    """An attribute rule has to beat the product-type default, or it is inert."""
+    eyewear = [r for r in catalog if r["category"] == "eyewear"]
+    aviators = [r for r in eyewear if r.get("frame_shape") == "aviator"]
+    others = [r for r in eyewear if r.get("frame_shape") != "aviator"]
+
+    assert aviators and others
+    assert {r["target_audience"] for r in aviators} == {"all_genders"}
+    assert {r["target_audience"] for r in others} == {"womens"}

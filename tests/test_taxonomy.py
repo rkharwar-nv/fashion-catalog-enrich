@@ -185,6 +185,12 @@ def test_espadrille_flat_is_not_a_sandal():
 # --------------------------------------------------------------------------- #
 # target_audience
 # --------------------------------------------------------------------------- #
+def test_every_product_type_has_a_department_rule():
+    """A type with no rule leaves its products out of a filterable field."""
+    from fashion_catalog.taxonomy import AUDIENCE_BY_PRODUCT_TYPE, PRODUCT_ATTRIBUTES
+    assert set(PRODUCT_ATTRIBUTES) == set(AUDIENCE_BY_PRODUCT_TYPE)
+
+
 def test_target_audience_applies_to_every_product_type():
     from fashion_catalog.taxonomy import PRODUCT_ATTRIBUTES
     missing = [t for t, attrs in PRODUCT_ATTRIBUTES.items() if "target_audience" not in attrs]

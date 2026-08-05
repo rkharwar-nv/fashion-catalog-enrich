@@ -473,33 +473,67 @@ def validate_enrichment(value: dict[str, Any], source: dict[str, Any] | None = N
 ALL_ATTRIBUTES = set().union(*PRODUCT_ATTRIBUTES.values())
 
 
-# Product types whose *name* settles which department they belong to, because
-# the garment term is itself gendered: a dress, a skirt, a blouse, a camisole.
+# Which department a product is merchandised under, by product type.
 #
-# Nothing else qualifies. A bag, a pair of sunglasses or a bracelet has no cut
-# that decides a department -- merchants shelve handbags under womens, split
-# watches between mens and womens, and run gendered eyewear ranges, so assuming
-# all_genders for them asserts something the classification does not support.
-# Knitwear, jumpsuits and footwear are the same: worn by anyone as often as not.
-#
-# For everything absent here the classification is simply silent, and the value
-# has to come from the merchant, from enrichment reading the product, or from a
-# reviewed decision.
+# Dresses, skirts, blouses and camisoles are gendered garment terms. The rest is
+# merchandising policy for one catalog rather than anything the product itself
+# decides -- a tote has no cut, and heels are worn by anyone -- so these are a
+# reviewed default, not an inference, and a different retailer would set them
+# differently.
 AUDIENCE_BY_PRODUCT_TYPE: dict[str, str] = {
     "apparel.dresses": "womens",
     "apparel.skirts": "womens",
     "apparel.tops.blouses": "womens",
     "apparel.tops.camisoles": "womens",
+    "apparel.knitwear.sweaters": "womens",
+    "apparel.jumpsuits": "womens",
+    "footwear.boots": "womens",
+    "footwear.flats": "womens",
+    "footwear.heels": "womens",
+    "footwear.sandals": "womens",
+    "footwear.other_shoes": "womens",
+    "eyewear.sunglasses": "womens",
+    "jewelry.bracelets": "womens",
+    "jewelry.earrings": "womens",
+    "jewelry.necklaces": "womens",
+    "jewelry.watches": "womens",
+    "bags.clutches": "womens",
+    "bags.crossbody_bags": "all_genders",
+    "bags.other_bags": "all_genders",
+    "bags.satchels": "all_genders",
+    "bags.shoulder_bags": "all_genders",
+    "bags.tote_bags": "all_genders",
+    "bags.travel_bags": "all_genders",
+}
+
+# Departments that turn on an attribute rather than the product type. An aviator
+# frame is merchandised across departments in a way the other frame shapes in
+# this catalog are not.
+AUDIENCE_BY_ATTRIBUTE: dict[tuple[str, str, str], str] = {
+    ("eyewear.sunglasses", "frame_shape", "aviator"): "all_genders",
 }
 
 
-def derived_audience(category: str, subcategory: str) -> str | None:
-    """The department a classification settles, or None if it does not settle one."""
-    for product_type, audience in AUDIENCE_BY_PRODUCT_TYPE.items():
-        parts = product_type.split(".")
-        if parts[0] == category and parts[-1] == subcategory:
+def derived_audience(
+    category: str, subcategory: str, attributes: dict[str, Any] | None = None,
+) -> str | None:
+    """The department this catalog's rules assign, or None if none applies.
+
+    An attribute rule wins over the product-type default, so a distinction the
+    type cannot express -- an aviator frame among otherwise gendered eyewear --
+    does not require a per-product decision.
+    """
+    product_type = next(
+        (key for key in AUDIENCE_BY_PRODUCT_TYPE | {k[0]: None for k in AUDIENCE_BY_ATTRIBUTE}
+         if key.split(".")[0] == category and key.split(".")[-1] == subcategory),
+        None,
+    )
+    if product_type is None:
+        return None
+    for (rule_type, attribute, value), audience in AUDIENCE_BY_ATTRIBUTE.items():
+        if rule_type == product_type and (attributes or {}).get(attribute) == value:
             return audience
-    return None
+    return AUDIENCE_BY_PRODUCT_TYPE.get(product_type)
 
 
 def partition_errors(errors: list[str]) -> tuple[list[str], dict[str, list[str]]]:
