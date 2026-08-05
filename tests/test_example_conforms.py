@@ -126,5 +126,5 @@ def test_aviator_frames_override_the_eyewear_default(catalog):
     others = [r for r in eyewear if r.get("frame_shape") != "aviator"]
 
     assert aviators and others
-    assert {r["target_audience"] for r in aviators} == {"all_genders"}
+    assert {r["target_audience"] for r in aviators} == {"adult_all_genders"}
     assert {r["target_audience"] for r in others} == {"womens"}

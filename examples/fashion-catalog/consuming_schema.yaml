@@ -29,9 +29,11 @@ fields:
   pattern:
     type: enum
     uses: [filter, semantic, detail]
-  # Merchandising department: womens, mens, all_genders, kids.
+  # Merchandising department: womens, mens, adult_all_genders, kids.
+  # adult_all_genders is adult sizing worn by anyone; kids is separate, not a
+  # subset of it.
   # Maps to the gender attribute of common product feeds as
-  # womens -> female, mens -> male, all_genders -> unisex.
+  # womens -> female, mens -> male, adult_all_genders -> unisex, kids -> kids.
   target_audience:
     type: enum
     uses: [filter, semantic, detail]

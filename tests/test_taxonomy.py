@@ -199,14 +199,14 @@ def test_target_audience_applies_to_every_product_type():
 
 def test_target_audience_values():
     from fashion_catalog.taxonomy import ATTRIBUTE_VALUES
-    assert ATTRIBUTE_VALUES["target_audience"] == {"womens", "mens", "all_genders", "kids"}
+    assert ATTRIBUTE_VALUES["target_audience"] == {"womens", "mens", "adult_all_genders", "kids"}
 
 
-def test_prompt_prefers_all_genders_over_a_gendered_default():
+def test_prompt_prefers_adult_all_genders_over_a_gendered_default():
     from pathlib import Path
     source = (Path(__file__).resolve().parents[1]
               / "src" / "fashion_catalog" / "models.py").read_text()
-    assert "Prefer all_genders" in source
+    assert "Prefer adult_all_genders" in source
 
 
 def test_target_audience_can_be_sourced_from_a_merchant_column():

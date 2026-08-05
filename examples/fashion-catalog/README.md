@@ -83,17 +83,17 @@ rather than redoing it, so no value here came from a model. All 215 were set by
 | | |
 |---|---:|
 | `womens` | 177 |
-| `all_genders` | 38 — bags other than clutches, and aviator sunglasses |
+| `adult_all_genders` | 38 — bags other than clutches, and aviator sunglasses |
 
 Only part of that is inference. Dress, skirt, blouse and camisole are gendered
 garment terms, so those follow from the classification. The rest — heels as
-womens, totes as all_genders, aviators as all_genders while cat-eye is womens —
+womens, totes as adult_all_genders, aviators as adult_all_genders while cat-eye is womens —
 is **merchandising policy for this catalog**, reviewed and recorded rather than
 derived. A different retailer would set them differently, which is why they live
 in an editable table rather than in the enrichment prompt.
 
 The aviator rule is attribute-level: it beats the eyewear default, so 9 of the
-29 sunglasses are `all_genders` and the other 20 are `womens`.
+29 sunglasses are `adult_all_genders` and the other 20 are `womens`.
 
 ## Reproducing
 

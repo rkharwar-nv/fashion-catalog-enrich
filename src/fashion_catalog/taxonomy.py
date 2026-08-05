@@ -57,10 +57,12 @@ ATTRIBUTE_VALUES = {
     "jewelry_form": {"chain", "beaded", "cuff", "bangle", "charm", "drop", "hoop", "stud", "pendant", "choker", "strand", "other"},
     "metal_color": {"gold_tone", "silver_tone", "rose_gold_tone", "mixed", "other"},
     # The department a product is merchandised under, not a statement about the
-    # customer. "all_genders" covers everything cut to be worn by anyone, which
-    # is how retailers increasingly shelve accessories, jewellery and much
-    # apparel rather than defaulting them to a gendered aisle.
-    "target_audience": {"womens", "mens", "all_genders", "kids"},
+    # customer. "adult_all_genders" is adult sizing cut to be worn by anyone,
+    # which is how retailers increasingly shelve accessories, jewellery and much
+    # apparel rather than defaulting them to a gendered aisle. It is named for
+    # adults because the alternative to a gendered department is still an age
+    # one: "kids" is not a subset of it.
+    "target_audience": {"womens", "mens", "adult_all_genders", "kids"},
 }
 
 FREE_TEXT_ATTRIBUTES = {"composition", "care"}
@@ -498,19 +500,19 @@ AUDIENCE_BY_PRODUCT_TYPE: dict[str, str] = {
     "jewelry.necklaces": "womens",
     "jewelry.watches": "womens",
     "bags.clutches": "womens",
-    "bags.crossbody_bags": "all_genders",
-    "bags.other_bags": "all_genders",
-    "bags.satchels": "all_genders",
-    "bags.shoulder_bags": "all_genders",
-    "bags.tote_bags": "all_genders",
-    "bags.travel_bags": "all_genders",
+    "bags.crossbody_bags": "adult_all_genders",
+    "bags.other_bags": "adult_all_genders",
+    "bags.satchels": "adult_all_genders",
+    "bags.shoulder_bags": "adult_all_genders",
+    "bags.tote_bags": "adult_all_genders",
+    "bags.travel_bags": "adult_all_genders",
 }
 
 # Departments that turn on an attribute rather than the product type. An aviator
 # frame is merchandised across departments in a way the other frame shapes in
 # this catalog are not.
 AUDIENCE_BY_ATTRIBUTE: dict[tuple[str, str, str], str] = {
-    ("eyewear.sunglasses", "frame_shape", "aviator"): "all_genders",
+    ("eyewear.sunglasses", "frame_shape", "aviator"): "adult_all_genders",
 }
 
 

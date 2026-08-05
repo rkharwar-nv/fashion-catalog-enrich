@@ -87,22 +87,24 @@ eliminates a product.
 - `composition` and `care` are **free-text merchant claims** and cannot be
   sourced from the image alone. "60% cotton" is not visible. An attempt to
   derive them visually is rejected.
-- `target_audience` — `womens`, `mens`, `all_genders`, `kids` — is the
+- `target_audience` — `womens`, `mens`, `adult_all_genders`, `kids` — is the
   **department a product is merchandised under**, not a statement about any
   person. The merchant's value wins. Failing that it may be inferred only from
   how the product is cut or constructed, and only where that is decisive. It is
   never inferred from the appearance, body, presentation, or perceived gender of
   a person in the image.
 
-  `all_genders` is a positive answer, not a fallback: it means the product is
-  cut to be worn by anyone, and it must be evidenced like any other value. It is
+  `adult_all_genders` is a positive answer, not a fallback: it means adult
+  sizing cut to be worn by anyone, and it must be evidenced like any other
+  value. It is named for adults deliberately — `kids` is a separate department,
+  not a subset of it, so a child's coat is `kids` however it is cut. It is
   not what to assume about a product that merely looks ungendered — merchants
   shelve handbags, eyewear and jewellery by department routinely, so a category
   alone never settles this. A product photographed on a woman is not thereby
   womenswear.
 
   For feed interoperability this maps to the conventional `gender` attribute as
-  `womens` → female, `mens` → male, `all_genders` → unisex. The catalog keeps
+  `womens` → female, `mens` → male, `adult_all_genders` → unisex. The catalog keeps
   the merchandising vocabulary; the mapping happens at export.
 
 ## Poor product information

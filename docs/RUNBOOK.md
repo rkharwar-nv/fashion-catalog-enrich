@@ -128,7 +128,7 @@ fashion-catalog-rebuild \
   field existed, from `AUDIENCE_BY_PRODUCT_TYPE` and `AUDIENCE_BY_ATTRIBUTE` in
   `taxonomy.py`. It never overwrites an enriched value. Those tables are
   merchandising policy — a gendered garment term follows from the product, but
-  whether a tote is `womens` or `all_genders` is a decision your catalog makes,
+  whether a tote is `womens` or `adult_all_genders` is a decision your catalog makes,
   so edit them to match how you shelve.
   Rows it touches are marked `target_audience_source: derived_from_classification`
   in the ledger, so a derived value is never mistaken for an observed one.
@@ -184,7 +184,7 @@ appear. An absent attribute means "not established", never "false".
 | | Attributes |
 |---|---|
 | all products | `primary_color`, `pattern`, `composition`, `care`, `target_audience` |
-| | `target_audience` is `womens` / `mens` / `all_genders` / `kids` |
+| | `target_audience` is `womens` / `mens` / `adult_all_genders` / `kids` |
 | apparel | `neckline`, `sleeve_length`, `garment_length`, `silhouette`, `closure` |
 | footwear | `toe_shape`, `heel_type`, `fastening`, `shaft_height` |
 | bags | `carry_method`, `bag_closure`, `structure` |
