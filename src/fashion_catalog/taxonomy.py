@@ -473,31 +473,23 @@ def validate_enrichment(value: dict[str, Any], source: dict[str, Any] | None = N
 ALL_ATTRIBUTES = set().union(*PRODUCT_ATTRIBUTES.values())
 
 
-# Product types whose construction settles which department they belong to,
-# without looking at a photograph or at who is in it.
+# Product types whose *name* settles which department they belong to, because
+# the garment term is itself gendered: a dress, a skirt, a blouse, a camisole.
 #
-# Only types that are decisive appear here. A sweater, a jumpsuit, a boot or a
-# flat is cut to be worn by anyone as often as not, so those are deliberately
-# absent and stay unset rather than being guessed at. This is a merchandising
-# convention, not a fact about a garment, so it is applied only on request and
-# recorded as derived.
+# Nothing else qualifies. A bag, a pair of sunglasses or a bracelet has no cut
+# that decides a department -- merchants shelve handbags under womens, split
+# watches between mens and womens, and run gendered eyewear ranges, so assuming
+# all_genders for them asserts something the classification does not support.
+# Knitwear, jumpsuits and footwear are the same: worn by anyone as often as not.
+#
+# For everything absent here the classification is simply silent, and the value
+# has to come from the merchant, from enrichment reading the product, or from a
+# reviewed decision.
 AUDIENCE_BY_PRODUCT_TYPE: dict[str, str] = {
     "apparel.dresses": "womens",
     "apparel.skirts": "womens",
-    "apparel.tops.camisoles": "womens",
     "apparel.tops.blouses": "womens",
-    "bags.clutches": "all_genders",
-    "bags.crossbody_bags": "all_genders",
-    "bags.other_bags": "all_genders",
-    "bags.satchels": "all_genders",
-    "bags.shoulder_bags": "all_genders",
-    "bags.tote_bags": "all_genders",
-    "bags.travel_bags": "all_genders",
-    "eyewear.sunglasses": "all_genders",
-    "jewelry.bracelets": "all_genders",
-    "jewelry.earrings": "all_genders",
-    "jewelry.necklaces": "all_genders",
-    "jewelry.watches": "all_genders",
+    "apparel.tops.camisoles": "womens",
 }
 
 

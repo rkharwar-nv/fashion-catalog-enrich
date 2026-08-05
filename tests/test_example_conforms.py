@@ -113,16 +113,18 @@ def test_derived_audience_matches_what_the_rule_would_produce(catalog):
     assert disagreements == []
 
 
-def test_types_that_do_not_settle_a_department_are_left_unset(catalog):
-    """Absence is the honest answer where construction does not decide."""
-    unset = {
+def test_only_definitional_garment_terms_carry_a_derived_department(catalog):
+    """Absence is the honest answer wherever the classification is silent.
+
+    A bag, a pair of sunglasses or a bracelet has no cut that decides a
+    department, and merchants shelve all three by department routinely, so the
+    classification alone must not assert one.
+    """
+    assigned = {
         (record["category"], record["subcategory"])
-        for record in catalog if not record.get("target_audience")
+        for record in catalog if record.get("target_audience")
     }
-    # Knitwear, jumpsuits and footwear are cut to be worn by anyone as often as
-    # not, so none of them is assigned a department by rule.
-    assert unset == {
-        ("apparel", "jumpsuits"), ("apparel", "sweaters"),
-        ("footwear", "boots"), ("footwear", "flats"),
-        ("footwear", "heels"), ("footwear", "sandals"),
+    assert assigned == {
+        ("apparel", "dresses"), ("apparel", "skirts"),
+        ("apparel", "blouses"), ("apparel", "camisoles"),
     }

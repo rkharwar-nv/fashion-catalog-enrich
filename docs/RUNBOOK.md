@@ -124,9 +124,10 @@ fashion-catalog-rebuild \
   dispute.
 - `--baseline` is optional and marks each row `ADDED`, `UPDATED`, `UNCHANGED` or
   `DROPPED` against a previous catalog.
-- `--derive-audience` sets `target_audience` from the classification where the
-  product type settles it, for catalogs enriched before the field existed. It
-  never overwrites an enriched value, and leaves types it cannot settle unset.
+- `--derive-audience` sets `target_audience` for catalogs enriched before the
+  field existed, but only where the garment term is itself gendered — dress,
+  skirt, blouse, camisole. It never overwrites an enriched value, and everything
+  else stays unset because a category does not decide a department.
   Rows it touches are marked `target_audience_source: derived_from_classification`
   in the ledger, so a derived value is never mistaken for an observed one.
 

@@ -78,19 +78,16 @@ the summary counts the rest as `content_only_changes`.
 
 `target_audience` was added after this run, and a rebuild replays enrichment
 rather than redoing it, so no value here came from a model. These were set from
-the classification with `--derive-audience`: 162 of 215 products, leaving 53
-unset.
+the classification with `--derive-audience`: **83 of 215**, all `womens`.
 
-| | |
-|---|---:|
-| `womens` — dresses, skirts, blouses, camisoles | 83 |
-| `all_genders` — bags, eyewear, jewellery | 79 |
-| unset | 53 |
+Only garment terms that are themselves gendered qualify — dress, skirt, blouse,
+camisole. The other 132 are unset, and that is the honest answer rather than a
+gap. A bag, a pair of sunglasses or a bracelet has no cut that decides a
+department, and merchants shelve all three by department routinely, so the
+classification cannot assert one. Knitwear, jumpsuits and footwear are the same.
 
-Unset means the product type does not settle it. Knitwear, jumpsuits and all
-footwear are cut to be worn by anyone as often as not, so the rule assigns them
-nothing rather than guessing. A fresh enrichment run can do better, because it
-can read the garment; a classification alone cannot.
+Filling those needs the merchant's own value, a fresh enrichment run that can
+read the product, or a reviewed decision per product.
 
 ## Reproducing
 

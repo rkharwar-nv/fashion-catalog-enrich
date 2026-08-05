@@ -94,10 +94,12 @@ eliminates a product.
   never inferred from the appearance, body, presentation, or perceived gender of
   a person in the image.
 
-  `all_genders` is the preferred value, not a fallback: `womens` and `mens` are
-  for products whose construction is genuinely specific, and most accessories,
-  bags, eyewear and jewellery are cut to be worn by anyone. A product
-  photographed on a woman is not thereby womenswear.
+  `all_genders` is a positive answer, not a fallback: it means the product is
+  cut to be worn by anyone, and it must be evidenced like any other value. It is
+  not what to assume about a product that merely looks ungendered — merchants
+  shelve handbags, eyewear and jewellery by department routinely, so a category
+  alone never settles this. A product photographed on a woman is not thereby
+  womenswear.
 
   For feed interoperability this maps to the conventional `gender` attribute as
   `womens` → female, `mens` → male, `all_genders` → unisex. The catalog keeps
