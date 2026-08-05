@@ -56,15 +56,18 @@ ATTRIBUTE_VALUES = {
     "lens_appearance": {"clear", "dark", "gradient", "mirrored", "colored", "other"},
     "jewelry_form": {"chain", "beaded", "cuff", "bangle", "charm", "drop", "hoop", "stud", "pendant", "choker", "strand", "other"},
     "metal_color": {"gold_tone", "silver_tone", "rose_gold_tone", "mixed", "other"},
-    # Who the product is merchandised for, not who is wearing it in the photo.
-    "target_audience": {"women", "men", "unisex", "kids"},
+    # The department a product is merchandised under, not a statement about the
+    # customer. "all_genders" covers everything cut to be worn by anyone, which
+    # is how retailers increasingly shelve accessories, jewellery and much
+    # apparel rather than defaulting them to a gendered aisle.
+    "target_audience": {"womens", "mens", "all_genders", "kids"},
 }
 
 FREE_TEXT_ATTRIBUTES = {"composition", "care"}
 STRUCTURED_SOURCE_FIELDS = {
     "composition": {"composition", "material", "materials", "fabric"},
     "care": {"care", "care_instructions"},
-    "target_audience": {"target_audience", "audience", "gender", "department", "for"},
+    "target_audience": {"target_audience", "audience", "gender", "department", "shop_for"},
 }
 STATUSES = {"accepted", "unknown", "not_visible", "not_applicable", "conflicting", "needs_review"}
 SOURCES = {"source_structured", "source_text", "image", "image_ocr"}

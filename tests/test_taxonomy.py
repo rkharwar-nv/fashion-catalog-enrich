@@ -193,7 +193,14 @@ def test_target_audience_applies_to_every_product_type():
 
 def test_target_audience_values():
     from fashion_catalog.taxonomy import ATTRIBUTE_VALUES
-    assert ATTRIBUTE_VALUES["target_audience"] == {"women", "men", "unisex", "kids"}
+    assert ATTRIBUTE_VALUES["target_audience"] == {"womens", "mens", "all_genders", "kids"}
+
+
+def test_prompt_prefers_all_genders_over_a_gendered_default():
+    from pathlib import Path
+    source = (Path(__file__).resolve().parents[1]
+              / "src" / "fashion_catalog" / "models.py").read_text()
+    assert "Prefer all_genders" in source
 
 
 def test_target_audience_can_be_sourced_from_a_merchant_column():
@@ -207,4 +214,5 @@ def test_prompt_forbids_reading_audience_off_the_model():
     from pathlib import Path
     source = (Path(__file__).resolve().parents[1]
               / "src" / "fashion_catalog" / "models.py").read_text()
-    assert "Never infer it from the appearance, body, or presentation of a person" in source
+    assert ("Never infer it from the appearance, body, presentation, or perceived gender "
+            "of a person") in source
