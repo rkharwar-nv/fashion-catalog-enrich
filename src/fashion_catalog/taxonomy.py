@@ -473,6 +473,43 @@ def validate_enrichment(value: dict[str, Any], source: dict[str, Any] | None = N
 ALL_ATTRIBUTES = set().union(*PRODUCT_ATTRIBUTES.values())
 
 
+# Product types whose construction settles which department they belong to,
+# without looking at a photograph or at who is in it.
+#
+# Only types that are decisive appear here. A sweater, a jumpsuit, a boot or a
+# flat is cut to be worn by anyone as often as not, so those are deliberately
+# absent and stay unset rather than being guessed at. This is a merchandising
+# convention, not a fact about a garment, so it is applied only on request and
+# recorded as derived.
+AUDIENCE_BY_PRODUCT_TYPE: dict[str, str] = {
+    "apparel.dresses": "womens",
+    "apparel.skirts": "womens",
+    "apparel.tops.camisoles": "womens",
+    "apparel.tops.blouses": "womens",
+    "bags.clutches": "all_genders",
+    "bags.crossbody_bags": "all_genders",
+    "bags.other_bags": "all_genders",
+    "bags.satchels": "all_genders",
+    "bags.shoulder_bags": "all_genders",
+    "bags.tote_bags": "all_genders",
+    "bags.travel_bags": "all_genders",
+    "eyewear.sunglasses": "all_genders",
+    "jewelry.bracelets": "all_genders",
+    "jewelry.earrings": "all_genders",
+    "jewelry.necklaces": "all_genders",
+    "jewelry.watches": "all_genders",
+}
+
+
+def derived_audience(category: str, subcategory: str) -> str | None:
+    """The department a classification settles, or None if it does not settle one."""
+    for product_type, audience in AUDIENCE_BY_PRODUCT_TYPE.items():
+        parts = product_type.split(".")
+        if parts[0] == category and parts[-1] == subcategory:
+            return audience
+    return None
+
+
 def partition_errors(errors: list[str]) -> tuple[list[str], dict[str, list[str]]]:
     """Split validation errors into record-fatal ones and per-attribute ones.
 

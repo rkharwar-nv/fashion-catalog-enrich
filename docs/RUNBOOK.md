@@ -124,6 +124,11 @@ fashion-catalog-rebuild \
   dispute.
 - `--baseline` is optional and marks each row `ADDED`, `UPDATED`, `UNCHANGED` or
   `DROPPED` against a previous catalog.
+- `--derive-audience` sets `target_audience` from the classification where the
+  product type settles it, for catalogs enriched before the field existed. It
+  never overwrites an enriched value, and leaves types it cannot settle unset.
+  Rows it touches are marked `target_audience_source: derived_from_classification`
+  in the ledger, so a derived value is never mistaken for an observed one.
 
 Both refuse to run if the CSV's SHA-256 does not match what the decision file and
 the frozen runs were built against, because row numbers only mean something for

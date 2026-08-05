@@ -54,6 +54,7 @@ from fashion_catalog.taxonomy import (
     PRODUCT_ATTRIBUTES,
     TAXONOMY_VERSION,
     color_mismatch,
+    derived_audience,
     name_product_signal,
     resolve_product_type,
     types_compatible,
@@ -121,6 +122,7 @@ def rebuild(
     decisions_path: Path | None,
     output_dir: Path,
     baseline: Path | None = None,
+    derive_audience: bool = False,
 ) -> dict[str, Any]:
     input_sha = _sha256(input_csv)
 
@@ -283,6 +285,15 @@ def rebuild(
             if field not in NON_ATTRIBUTE_FIELDS and value not in (None, "", []):
                 published[field] = value
         published["enriched_description"] = record["enriched_description"]
+        if derive_audience and not published.get("target_audience"):
+            # Set from the classification, not from the image or the person in
+            # it. Only types whose construction settles the department appear in
+            # the table; the rest stay unset.
+            audience = derived_audience(published["category"], published["subcategory"])
+            if audience:
+                published["target_audience"] = audience
+                entry["target_audience_source"] = "derived_from_classification"
+
         if decision and decision.attributes:
             # A reviewer corrected an attribute the model got wrong. Recorded in
             # the ledger, so the published value always has a named author.
@@ -374,7 +385,8 @@ def rebuild(
         "in_baseline", "gate_reasons",
         "source_category", "visual_classification", "classification", "name_signal",
         "name_verdict", "subcategory_verdict", "outlier", "resolved_by", "reviewer", "reason",
-        "reason_detail", "color_flag", "color_flag_confidence", "classification_override",
+        "reason_detail", "color_flag", "color_flag_confidence", "target_audience_source",
+        "classification_override",
         "attribute_overrides",
         "changed_fields",
         "merchant_name", "corrected_name", "enrichment_run",
@@ -485,6 +497,9 @@ def rebuild(
         # Every other UPDATED row differs only in enriched prose or attributes,
         # which is expected when the enrichment source run changes. Per-row
         # detail is in rebuild_ledger.jsonl.
+        summary["target_audience_derived"] = sum(
+            1 for e in ledger if e.get("target_audience_source") == "derived_from_classification"
+        )
         summary["color_mismatches"] = {
             "high_confidence": sum(
                 1 for e in ledger if e.get("color_flag_confidence") == "high"
@@ -543,7 +558,7 @@ def main() -> None:
     args = parser.parse_args()
     print(json.dumps(
         rebuild(args.input_csv, args.enrichment, args.gate_run, args.decisions,
-                args.output_dir, args.baseline),
+                args.output_dir, args.baseline, args.derive_audience),
         indent=2,
     ))
 

@@ -74,12 +74,23 @@ the summary counts the rest as `content_only_changes`.
 - **The outlier flags** in `reconciliation.csv` — products published despite a
   disagreeing merchant signal, with the disagreeing signal named.
 
-## What this example predates
+## target_audience here is derived, not enriched
 
-`target_audience` was added to the taxonomy after this run. Enrichment produces
-attribute values, and a rebuild replays enrichment rather than redoing it, so no
-record here carries one. Populating it needs a fresh enrichment run against the
-source catalog.
+`target_audience` was added after this run, and a rebuild replays enrichment
+rather than redoing it, so no value here came from a model. These were set from
+the classification with `--derive-audience`: 162 of 215 products, leaving 53
+unset.
+
+| | |
+|---|---:|
+| `womens` — dresses, skirts, blouses, camisoles | 83 |
+| `all_genders` — bags, eyewear, jewellery | 79 |
+| unset | 53 |
+
+Unset means the product type does not settle it. Knitwear, jumpsuits and all
+footwear are cut to be worn by anyone as often as not, so the rule assigns them
+nothing rather than guessing. A fresh enrichment run can do better, because it
+can read the garment; a classification alone cannot.
 
 ## Reproducing
 

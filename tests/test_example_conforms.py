@@ -94,3 +94,35 @@ def test_attributes_are_applicable_to_their_product_type(catalog):
         and field not in by_classification.get((record["category"], record["subcategory"]), set())
     ]
     assert offenders == []
+
+
+def test_derived_audience_matches_what_the_rule_would_produce(catalog):
+    """The example's target_audience must be reproducible, not hand-set.
+
+    Values here were derived from the classification rather than enriched, so
+    they have to agree exactly with what --derive-audience would write.
+    """
+    from fashion_catalog.taxonomy import derived_audience
+
+    disagreements = [
+        (record["source_row"], record.get("target_audience"), expected)
+        for record in catalog
+        for expected in [derived_audience(record["category"], record["subcategory"])]
+        if record.get("target_audience") != expected
+    ]
+    assert disagreements == []
+
+
+def test_types_that_do_not_settle_a_department_are_left_unset(catalog):
+    """Absence is the honest answer where construction does not decide."""
+    unset = {
+        (record["category"], record["subcategory"])
+        for record in catalog if not record.get("target_audience")
+    }
+    # Knitwear, jumpsuits and footwear are cut to be worn by anyone as often as
+    # not, so none of them is assigned a department by rule.
+    assert unset == {
+        ("apparel", "jumpsuits"), ("apparel", "sweaters"),
+        ("footwear", "boots"), ("footwear", "flats"),
+        ("footwear", "heels"), ("footwear", "sandals"),
+    }
