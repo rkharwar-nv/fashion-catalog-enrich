@@ -32,6 +32,23 @@ corrected.
 | `rebuild_summary.json` | counts, status breakdown, and the substantive differences |
 | `rebuild_ledger.jsonl` | every source row and how it resolved |
 | `rebuild_manifest.json` | hashes and versions pinning the run |
+| `consuming_schema.yaml` | **not an output** — a real consumer's schema, so the contract can be checked |
+
+### The consuming schema
+
+`consuming_schema.yaml` is a copy of the schema a downstream service ingests
+this catalog with. It is here so the claims about the output can be verified
+rather than taken on trust: which fields exist, which are filterable, and which
+carry the customer-facing description.
+
+`tests/test_example_conforms.py` checks the catalog against it — no undeclared
+field, nothing the consumer maps left empty, every enum value in taxonomy, and
+no attribute on a product type that does not allow it. Reshape the output and
+that test tells you what a consumer would notice.
+
+Note what it declares `uses: [filter, ...]`. An absent value on a filterable
+field means the product matches no filter on it, which is why an unfilterable
+colour is treated as a finding rather than a cosmetic gap.
 
 ### Why `reconciliation.csv` has 20 rows and the ledger has 218
 
