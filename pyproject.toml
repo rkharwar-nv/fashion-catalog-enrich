@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fashion-catalog-enrichment"
+version = "0.1.0"
+description = "Multimodal fashion catalog enrichment with an auditable publication gate"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+dependencies = [
+    "openai>=1.40",
+    "pillow>=10.0",
+]
+
+[project.optional-dependencies]
+yaml = ["pyyaml>=6.0"]
+dev = ["pytest>=8.0", "ruff>=0.6", "pyyaml>=6.0"]
+
+[project.scripts]
+fashion-catalog-enrich = "fashion_catalog.batch:main"
+fashion-catalog-rebuild = "fashion_catalog.cli.rebuild:main"
+fashion-catalog-review = "fashion_catalog.cli.review:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fashion_catalog"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = ["E501"]

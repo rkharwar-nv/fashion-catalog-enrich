@@ -1,0 +1,52 @@
+{
+  "source_rows": 218,
+  "published": 215,
+  "excluded": 3,
+  "excluded_by_reason": {
+    "UNRESOLVED_PRODUCT_CLASSIFICATION": 1,
+    "REVIEWER_EXCLUDED": 1,
+    "NO_FROZEN_ENRICHMENT": 1
+  },
+  "contested_rows": 13,
+  "resolved_by_uncontested": 205,
+  "resolved_by_signal_majority": 9,
+  "resolved_by_reviewed_decision": 1,
+  "published_with_outlier_signal": 3,
+  "status_counts": {
+    "ADDED": 10,
+    "UPDATED": 201,
+    "UNCHANGED": 4,
+    "DROPPED": 3
+  },
+  "record_ids_changed": 205,
+  "reclassified_vs_baseline": [
+    {
+      "source_row": 32,
+      "name": "Polished Pebble Grain Purse",
+      "changes": "classification bags/shoulder_bags -> bags/satchels; 4 field(s) differ: bag_closure, composition, enriched_description, pattern"
+    },
+    {
+      "source_row": 172,
+      "name": "Belleza Ballet Heels in Silver",
+      "changes": "classification footwear/flats -> footwear/heels"
+    }
+  ],
+  "color_mismatches": {
+    "high_confidence": 0,
+    "low_confidence": 0
+  },
+  "content_only_changes": 199,
+  "added_vs_baseline": [
+    3,
+    37,
+    38,
+    43,
+    51,
+    118,
+    161,
+    182,
+    186,
+    198
+  ],
+  "dropped_vs_baseline": []
+}

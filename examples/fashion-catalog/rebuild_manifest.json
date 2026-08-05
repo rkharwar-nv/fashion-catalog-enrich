@@ -1,0 +1,18 @@
+{
+  "input_csv": "/home/ubuntu/retail-shopping-assistant/shared/data/products_extended.csv",
+  "input_sha256": "3b58651736f9d67e324d3784c397476ffdda1cd7333b78a01d44674922ab6973",
+  "enrichment_runs": [
+    "/home/ubuntu/retail-shopping-assistant/shared/output/fashion-enriched-authoritative-v3-20260714",
+    "/home/ubuntu/retail-shopping-assistant/shared/output/fashion-enriched-authoritative-v2-20260713",
+    "/home/ubuntu/retail-shopping-assistant/shared/output/fashion-enriched-full-20260713"
+  ],
+  "gate_run": "/home/ubuntu/retail-shopping-assistant/shared/output/fashion-enriched-authoritative-v3-20260714",
+  "decisions_path": "shared/decisions/products_extended.jsonl",
+  "decisions_sha256": "1224e2cf8bf2686cd1c74863574248c7206794f3146ef7ccaddc4f6f4f8b0b5e",
+  "decisions_version": "fashion-decisions/0.1",
+  "taxonomy_version": "fashion-product-types/0.1",
+  "attribute_version": "fashion-attributes/0.1",
+  "publication_policy_version": "fashion-publication/0.4",
+  "enrichment_source": "replayed from a frozen run; no model calls were made",
+  "created_at": "2026-08-04T03:11:47.786979+00:00"
+}
